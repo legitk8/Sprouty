@@ -1,2 +1,2 @@
-### Rose
-# Discord Bot
+# Rose
+### Discord Bot
