@@ -24,8 +24,6 @@ class WorkEntry:
         self.taskname=name
         self.tasktime=time
 
-todolist=[]
-
 @bot.event
 async def on_ready():
     print('Logged in as {0.user.name} ID: {0.user.id}'.format(bot))
@@ -36,6 +34,7 @@ async def on_ready():
         with open('config.txt', 'r') as f:
             for line in f:
                 if ':' not in line:
+                    line = line[:-1]
                     dict[line]=[]
                     author=line
                     continue
@@ -52,14 +51,14 @@ async def ping(message):
 
 @bot.command()
 async def prt(message):
-    author=message.author
+    author=str(message.author)
     await message.channel.send("Current list of tasks is:")
     await message.channel.send(printX(dict[author]))
 
 
 @bot.command()
 async def todo(message, work: str='Generic', work_time: int=10):
-    author = message.author
+    author=str(message.author)
     if author in dict:
         todolistx=dict[author]
     else:
@@ -80,7 +79,7 @@ async def todo(message, work: str='Generic', work_time: int=10):
 
 @bot.command(aliases=['del', 'rem'])
 async def done(message, task_num: int):
-    author=message.author
+    author=str(message.author)
     del todolist[task_num-1]
     for i in range(task_num-1,len(dict[author])):
         dict[author][i].tasknum-=1
@@ -96,7 +95,7 @@ async def done(message, task_num: int):
 
 @bot.command(aliases=['start'])
 async def doing(message, task_num: int):
-    author=message.author
+    author=str(message.author)
     time = dict[author][task_num-1].tasktime
 
     await asyncio.sleep(time)
