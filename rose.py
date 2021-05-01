@@ -73,7 +73,7 @@ async def done(message, task_num: int):
     author = message.author
 
 dict = {}
-dict[author] = todolist
+dict[author].append(todolist)
 
     try:
         with open('config.txt', 'w') as f:
