@@ -10,6 +10,12 @@ def get_quotes():
     quote = json_data[0]['q'] + ' - ' + json_data[0]['a']
     return quote
 
+def print(todolist):
+    s=""
+    for i in todolist:
+        s=s+'|'+string(i.tasknum)+':'+i.taskname+'-'+string(i.tasktime)+'|'+'\n'
+    return s   
+
 class WorkEntry:
     def __init__(self,num,name,time):
         self.tasknum=num
@@ -40,8 +46,7 @@ async def ping(message):
 @bot.command()
 async def prt(message):
     await message.channel.send("Current list of tasks is:")
-    for i in todolist:
-        await message.channel.send(f'| {i.tasknum} : {i.taskname} - {i.tasktime} |')
+    await message.channel.send(print(todolist))
 
 
 @bot.command()
