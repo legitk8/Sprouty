@@ -46,7 +46,7 @@ async def ping(message):
 @bot.command()
 async def prt(message):
     await message.channel.send("Current list of tasks is:")
-    await message.channel.send(print(todolist))
+    await message.channel.send(printX(todolist))
 
 
 @bot.command()
