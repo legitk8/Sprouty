@@ -43,7 +43,21 @@ async def todo(message, work: str='', work_time: int=45):
                 f.write(f'{i.tasknum}:{i.taskname}:{i.tasktime}\n')
     except Exception as e:
         print(e)
-
+        
+@bot.command()
+async def done(message, task_num):
+    del todolist[task_num-1]
+    for i in range(task_num-1,len(todolist)):
+        todolist[i].tasknum-=1
+    await message.channel.send("Deleted task "+task_num+"\n")
+    author = message.author
+    try:
+        with open('config.txt', 'w') as f:
+            for i in todolist:
+                f.write(f'{i.tasknum}:{i.taskname}:{i.tasktime}\n')
+    except Exception as e:
+        print(e)
+    
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
