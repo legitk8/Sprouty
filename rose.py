@@ -16,9 +16,15 @@ s=""
 @bot.event
 async def on_ready():
     print('Logged in as {0.user.name} ID: {0.user.id}'.format(bot))
-
     activity = discord.Game(name='Rose', type=0)
     await bot.change_presence(activity=activity)
+    try:
+        with open('config.txt', 'r') as f:
+            for line in f:
+                temp_list=line.split(':')
+                todolist.append(WorkEntry(temp_list[0],temp_list[1],temp_list[2])
+    except Exception as e:
+        print(e)
 
 @bot.command()
 async def ping(message):
