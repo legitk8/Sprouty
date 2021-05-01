@@ -10,11 +10,11 @@ def get_quotes():
     quote = json_data[0]['q'] + ' - ' + json_data[0]['a']
     return quote
 
-def print(todolist):
+def printX(todolist):
     s=""
     for i in todolist:
-        s=s+'|'+string(i.tasknum)+':'+i.taskname+'-'+string(i.tasktime)+'|'+'\n'
-    return s   
+        s=s+'|'+str(i.tasknum)+':'+i.taskname+'-'+str(i.tasktime)+'|'+'\n'
+    return s
 
 class WorkEntry:
     def __init__(self,num,name,time):
