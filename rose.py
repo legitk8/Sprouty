@@ -11,7 +11,7 @@ class WorkEntry:
         self.tasktime=time
 
 todolist=[]
-
+#edit ho rha kya?
 @bot.event
 async def on_ready():
     print('Logged in as {0.user.name} ID: {0.user.id}'.format(bot))
