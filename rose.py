@@ -24,7 +24,7 @@ async def on_ready():
                 temp_list=line.split(':')
                 if temp_list[2][-1] == '\n':
                     temp_list[2] = temp_list[2][:-1]
-                todolist.append(WorkEntry(temp_list[0],temp_list[1],temp_list[2]))
+                todolist.append(WorkEntry(int(temp_list[0]),temp_list[1],int(temp_list[2])))
     except Exception as e:
         print(e)
 
@@ -52,7 +52,7 @@ async def todo(message, work: str='', work_time: int=45):
     except Exception as e:
         print(e)
 
-@bot.command()
+@bot.command(aliases=['del', 'rem'])
 async def done(message, task_num: int):
     del todolist[task_num-1]
     for i in range(task_num-1,len(todolist)):

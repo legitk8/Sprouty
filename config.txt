@@ -1,6 +1,5 @@
 1:hi:90
-2:hellow:56
-3:hello:70
-4:name:14
-5:yes:80
-6:nellow:69
+2:hello:70
+3:name:14
+4:yes:80
+5:nellow:69
