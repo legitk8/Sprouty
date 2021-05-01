@@ -100,7 +100,7 @@ async def doing(message, task_num: int):
     author=str(message.author)
     time = dict[author][task_num-1].tasktime
 
-    await asyncio.sleep(time)
+    await asyncio.sleep(time)*60
     await message.channel.send(f'Congratz,{message.author.mention} your task is done')
 
     quote = get_quotes()
