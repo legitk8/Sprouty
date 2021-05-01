@@ -57,7 +57,7 @@ async def done(message, task_num: int):
     for i in range(task_num-1,len(todolist)):
         todolist[i].tasknum-=1
 
-    await message.channel.send(f'Deleted task {task_num}\n')
+    await message.channel.send(f'Done task {task_num}\n')
     author = message.author
 
     try:
@@ -67,10 +67,14 @@ async def done(message, task_num: int):
     except Exception as e:
         print(e)
 
-@bot.command()
-async def timer(message, timer: int=5):
-    await asyncio.sleep(timer)
-    await message.channel.send(f'{timer} secs are over')
+@bot.command(aliases=['start'])
+async def doing(message, task_num: int):
+    time = todolist[task_num-1].tasktime
+
+    await asyncio.sleep(time)
+    await message.channel.send(f'Congratz, your task is done')
+
+    await done(message, task_num)
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')

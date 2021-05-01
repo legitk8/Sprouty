@@ -3,3 +3,4 @@
 3:name:14
 4:yes:80
 5:nellow:69
+6:doto:1
