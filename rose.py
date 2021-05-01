@@ -22,6 +22,8 @@ async def on_ready():
         with open('config.txt', 'r') as f:
             for line in f:
                 temp_list=line.split(':')
+                if temp_list[2][-1] == '\n':
+                    temp_list[2] = temp_list[2][:-1]
                 todolist.append(WorkEntry(temp_list[0],temp_list[1],temp_list[2]))
     except Exception as e:
         print(e)
@@ -65,7 +67,7 @@ async def done(message, task_num: int):
         print(e)
 
 @bot.command()
-async def timer(message, timer: int):
+async def timer(message, timer: int=5):
     await asyncio.sleep(timer)
     await message.channel.send(f'{timer} secs are over')
 
