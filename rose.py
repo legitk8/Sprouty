@@ -22,7 +22,7 @@ async def on_ready():
         with open('config.txt', 'r') as f:
             for line in f:
                 temp_list=line.split(':')
-                todolist.append(WorkEntry(temp_list[0],temp_list[1],temp_list[2])
+                todolist.append(WorkEntry(temp_list[0],temp_list[1],temp_list[2]))
     except Exception as e:
         print(e)
 
@@ -63,6 +63,11 @@ async def done(message, task_num: int):
                 f.write(f'{i.tasknum}:{i.taskname}:{i.tasktime}\n')
     except Exception as e:
         print(e)
+
+@bot.command()
+async def timer(message, timer: int):
+    await asyncio.sleep(timer)
+    await message.channel.send(f'{timer} secs are over')
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
