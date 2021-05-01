@@ -15,6 +15,18 @@ async def on_ready():
 async def ping(message):
     await message.channel.send(f'My ping is {round(bot.latency*1000)}ms')
 
+@bot.command()
+async def todo(message, work: str='', work_time: int=45, break_time: int=10):
+    await message.channel.send(f'work: {work}\ntime: {work_time}\nbreak: {break_time}')
+    author = message.author
+
+#wrting in txt file
+    try:
+        with open('config.txt', 'a') as f:
+            f.write(f'{author}:{work}:{work_time}:{break_time}\n')
+    except Exception as e:
+        print(e)
+
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
