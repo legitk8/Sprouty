@@ -11,7 +11,6 @@ class WorkEntry:
         self.tasktime=time
 
 todolist=[]
-s=""
 
 @bot.event
 async def on_ready():
@@ -57,8 +56,10 @@ async def done(message, task_num: int):
     del todolist[task_num-1]
     for i in range(task_num-1,len(todolist)):
         todolist[i].tasknum-=1
+
     await message.channel.send(f'Deleted task {task_num}\n')
     author = message.author
+
     try:
         with open('config.txt', 'w') as f:
             for i in todolist:
