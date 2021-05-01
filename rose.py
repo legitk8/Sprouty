@@ -34,7 +34,8 @@ async def ping(message):
 @bot.command()
 async def prt(message):
     for i in todolist:
-        await message.channel.send(f'| {i.tasknum} | {i.taskname} | {i.tasktime} |')
+        await message.channel.send("Current list of tasks is:")
+        await message.channel.send(f'| {i.tasknum} : {i.taskname} - {i.tasktime} |')
 
 
 @bot.command()
