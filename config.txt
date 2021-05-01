@@ -1,8 +1,0 @@
-mik#3120:work:20
-mik#3120:name:30
-mik#3120:name:30
-chobs#9375:name:40
-chobs#9375:doto:30
-chobs#9375:doto:30
-chobs#9375:game:40
-chobs#9375:fame:60
