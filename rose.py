@@ -88,8 +88,10 @@ async def done(message, task_num: int):
 
     try:
         with open('config.txt', 'w') as f:
-            for i in dict[author]:
-                f.write(f'{i.tasknum}:{i.taskname}:{i.tasktime}\n')
+            for i in dict:
+                f.write(str(i)+'\n')
+                for j in dict[i]:
+                    f.write(f'{j.tasknum}:{j.taskname}:{j.tasktime}\n')
     except Exception as e:
         print(e)
 
