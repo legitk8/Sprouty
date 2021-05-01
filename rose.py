@@ -1,8 +1,14 @@
-import discord, os, asyncio
+import discord, os, asyncio, requests, json
 from dotenv import load_dotenv
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix=['rose ', 'Rose '])
+
+def get_quotes():
+    response = requests.get('https://zenquotes.io/api/random')
+    json_data = json.loads(response.text)
+    quote = json_data[0]['q'] + ' - ' + json_data[0]['a']
+    return quote
 
 class WorkEntry:
     def __init__(self,num,name,time):
@@ -33,8 +39,8 @@ async def ping(message):
 
 @bot.command()
 async def prt(message):
+    await message.channel.send("Current list of tasks is:")
     for i in todolist:
-        await message.channel.send("Current list of tasks is:")
         await message.channel.send(f'| {i.tasknum} : {i.taskname} - {i.tasktime} |')
 
 
@@ -74,6 +80,9 @@ async def doing(message, task_num: int):
 
     await asyncio.sleep(time)
     await message.channel.send(f'Congratz, your task is done')
+
+    quote = get_quotes()
+    await message.channel.send(quote)
 
     await done(message, task_num)
 
