@@ -52,7 +52,7 @@ async def ping(message):
 @bot.command()
 async def prt(message):
     author=str(message.author)
-    await message.channel.send("Current list of tasks is:")
+    await message.channel.send(f"Task list of {message.author.mention}:")
     await message.channel.send(printX(dict[author]))
 
 
@@ -80,7 +80,7 @@ async def todo(message, work: str='Generic', work_time: int=10):
 @bot.command(aliases=['del', 'rem'])
 async def done(message, task_num: int):
     author=str(message.author)
-    del todolist[task_num-1]
+    del dict[author][task_num-1]
     for i in range(task_num-1,len(dict[author])):
         dict[author][i].tasknum-=1
 
@@ -99,7 +99,7 @@ async def doing(message, task_num: int):
     time = dict[author][task_num-1].tasktime
 
     await asyncio.sleep(time)
-    await message.channel.send(f'Congratz, your task is done')
+    await message.channel.send(f'Congratz,{message.author.mention} your task is done')
 
     quote = get_quotes()
     await message.channel.send(quote)
