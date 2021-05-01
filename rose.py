@@ -51,9 +51,14 @@ async def prt(message):
 
 @bot.command()
 async def todo(message, work: str='Generic', work_time: int=10):
-    todolist.append(WorkEntry(len(todolist)+1, work,work_time))
-    await message.channel.send(f'work: {work}\ntime: {work_time}')
     author = message.author
+    if author in dict:
+        todolistx=dict[author]
+    else:
+        todolistx=[]
+        dict[author]=todolistx
+    todolistx.append(WorkEntry(len(todolist)+1, work,work_time))
+    await message.channel.send(f'work: {work}\ntime: {work_time}')
 
 #wrting in txt file
     try:
