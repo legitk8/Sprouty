@@ -3,7 +3,9 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix=['rose ', 'Rose '])
+
 dict = {}
+
 def get_quotes():
     response = requests.get('https://zenquotes.io/api/random')
     json_data = json.loads(response.text)
@@ -64,7 +66,7 @@ async def todo(message, work: str='Generic', work_time: int=10):
     try:
         with open('config.txt', 'w') as f:
             for i in dict:
-                f.write(i+'\n')
+                f.write(str(i)+'\n')
                 for j in dict[i]:
                     f.write(f'{j.tasknum}:{j.taskname}:{j.tasktime}\n')
     except Exception as e:
