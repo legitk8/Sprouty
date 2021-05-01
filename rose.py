@@ -4,6 +4,15 @@ from discord.ext import commands
 
 bot = commands.Bot(command_prefix=['rose ', 'Rose '])
 
+class WorkEntry
+    def __init__(self,num,name,time)
+        self.tasknum=num
+        self.taskname=name
+        self.tasktime=time
+
+todolist=[]
+s=""
+
 @bot.event
 async def on_ready():
     print('Logged in as {0.user.name} ID: {0.user.id}'.format(bot))
@@ -17,13 +26,14 @@ async def ping(message):
 
 @bot.command()
 async def todo(message, work: str='', work_time: int=45):
+    todolist.append(WorkEntry(len(todolist)+1, work,work_time))
     await message.channel.send(f'work: {work}\ntime: {work_time}')
     author = message.author
 
 #wrting in txt file
     try:
         with open('config.txt', 'a') as f:
-            f.write(f'{author}:{work}:{work_time}')
+            f.write(f'{author}:{work}:{work_time}\n')
     except Exception as e:
         print(e)
 
