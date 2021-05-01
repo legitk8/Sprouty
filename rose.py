@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix=['rose ', 'Rose '])
-
+dict = {}
 def get_quotes():
     response = requests.get('https://zenquotes.io/api/random')
     json_data = json.loads(response.text)
@@ -78,9 +78,6 @@ async def done(message, task_num: int):
 
     await message.channel.send(f'Done task {task_num}\n')
     author = message.author
-
-dict = {}
-dict[author].append(todolist)
 
     try:
         with open('config.txt', 'w') as f:
