@@ -1,8 +1,0 @@
-mik#3120
-1:hello:10
-1:test:100
-chobs#9375
-1:nice:69
-1:yello:420
-Sarangi#9054
-1:hello:90

@@ -25,7 +25,7 @@ class WorkEntry:
         self.tasktime=time
 
 todolist=[]
-#edit ho rha kya?
+
 @bot.event
 async def on_ready():
     print('Logged in as {0.user.name} ID: {0.user.id}'.format(bot))
@@ -59,7 +59,7 @@ async def todo(message, work: str='Generic', work_time: int=10):
     else:
         todolistx=[]
         dict[author]=todolistx
-    todolistx.append(WorkEntry(len(todolist)+1, work,work_time))
+    todolistx.append(WorkEntry(len(todolistx)+1, work,work_time))
     await message.channel.send(f'work: {work}\ntime: {work_time}')
 
 #wrting in txt file
