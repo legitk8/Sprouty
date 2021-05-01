@@ -38,8 +38,9 @@ async def todo(message, work: str='', work_time: int=45):
 
 #wrting in txt file
     try:
-        with open('config.txt', 'a') as f:
-            f.write(f'{author}:{work}:{work_time}\n')
+        with open('config.txt', 'w') as f:
+            for i in todolist:
+                f.write(f'{i.tasknum}:{i.taskname}:{i.tasktime}\n')
     except Exception as e:
         print(e)
 
