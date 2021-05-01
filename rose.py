@@ -4,8 +4,8 @@ from discord.ext import commands
 
 bot = commands.Bot(command_prefix=['rose ', 'Rose '])
 
-class WorkEntry
-    def __init__(self,num,name,time)
+class WorkEntry:
+    def __init__(self,num,name,time):
         self.tasknum=num
         self.taskname=name
         self.tasktime=time
@@ -23,6 +23,12 @@ async def on_ready():
 @bot.command()
 async def ping(message):
     await message.channel.send(f'My ping is {round(bot.latency*1000)}ms')
+
+@bot.command()
+async def prt(message):
+    for i in todolist:
+        print(i.taskname)
+
 
 @bot.command()
 async def todo(message, work: str='', work_time: int=45):
