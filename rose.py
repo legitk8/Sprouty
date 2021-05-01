@@ -39,7 +39,7 @@ async def prt(message):
 
 
 @bot.command()
-async def todo(message, work: str='', work_time: int=45):
+async def todo(message, work: str='Generic', work_time: int=10):
     todolist.append(WorkEntry(len(todolist)+1, work,work_time))
     await message.channel.send(f'work: {work}\ntime: {work_time}')
     author = message.author
