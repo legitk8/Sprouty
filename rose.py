@@ -72,6 +72,9 @@ async def done(message, task_num: int):
     await message.channel.send(f'Done task {task_num}\n')
     author = message.author
 
+dict = {}
+dict[author] = todolist
+
     try:
         with open('config.txt', 'w') as f:
             for i in todolist:
