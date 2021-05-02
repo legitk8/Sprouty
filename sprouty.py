@@ -109,7 +109,7 @@ async def done(message, task_num: int):
 async def doing(message, task_num: int):
 	if task_num > 0:
 		author=str(message.author)
-		time = dict[author][task_num-1].tasktime
+		time = dict[author][task_num-1].tasktime*60
 
 		await message.channel.send('Task Started')
 		await asyncio.sleep(time)
