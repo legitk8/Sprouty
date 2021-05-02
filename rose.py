@@ -45,6 +45,13 @@ async def on_ready():
     except Exception as e:
         print(e)
 
+@bot.event
+async def on_command_error(message, error):
+    if isinstance(error, commands.BadArgument):
+        await message.channel.send('Please enter again with the right arugements')
+    if isinstance(error, commands.CommandNotFound):
+        await message.channel.send('Command not found')
+
 @bot.command()
 async def ping(message):
     await message.channel.send(f'My ping is {round(bot.latency*1000)}ms')
@@ -67,7 +74,7 @@ async def todo(message, work: str='Generic', work_time: int=10):
     todolistx.append(WorkEntry(len(todolistx)+1, work,work_time))
     await message.channel.send(f'work: {work}\ntime: {work_time}')
 
-#wrting in txt file
+    #wrting in txt file
     try:
         with open('config.txt', 'w') as f:
             for i in dict:
@@ -79,34 +86,40 @@ async def todo(message, work: str='Generic', work_time: int=10):
 
 @bot.command(aliases=['del', 'rem'])
 async def done(message, task_num: int):
-    author=str(message.author)
-    del dict[author][task_num-1]
-    for i in range(task_num-1,len(dict[author])):
-        dict[author][i].tasknum-=1
+    if task_num > 0:
+        author=str(message.author)
+        del dict[author][task_num-1]
+        for i in range(task_num-1,len(dict[author])):
+            dict[author][i].tasknum-=1
 
-    await message.channel.send(f'Done task {task_num}\n')
+        await message.channel.send(f'Done task {task_num}\n')
 
-    try:
-        with open('config.txt', 'w') as f:
-            for i in dict:
-                f.write(str(i)+'\n')
-                for j in dict[i]:
-                    f.write(f'{j.tasknum}:{j.taskname}:{j.tasktime}\n')
-    except Exception as e:
-        print(e)
+        try:
+            with open('config.txt', 'w') as f:
+                for i in dict:
+                    f.write(str(i)+'\n')
+                    for j in dict[i]:
+                        f.write(f'{j.tasknum}:{j.taskname}:{j.tasktime}\n')
+        except Exception as e:
+            print(e)
+    else:
+        await message.channel.send('Please enter the right task number')
 
 @bot.command(aliases=['start'])
 async def doing(message, task_num: int):
-    author=str(message.author)
-    time = dict[author][task_num-1].tasktime
+    if task_num > 0:
+        author=str(message.author)
+        time = dict[author][task_num-1].tasktime
 
-    await asyncio.sleep(time)*60
-    await message.channel.send(f'Congratz,{message.author.mention} your task is done')
+        await asyncio.sleep(time)*60
+        await message.channel.send(f'Congratz,{message.author.mention} your task is done')
 
-    quote = get_quotes()
-    await message.channel.send(quote)
+        quote = get_quotes()
+        await message.channel.send(quote)
 
-    await done(message, task_num)
+        await done(message, task_num)
+    else:
+        await message.channel.send('Please enter the right task number')
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
