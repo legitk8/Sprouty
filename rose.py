@@ -189,7 +189,7 @@ async def battleship(message,ship_size=3, dimension=5):
 		for i in range(SHIP_SIZE):
 			boardx[y+i][z]="*"
 
-	continue_game=0  
+    continue_game=0
 	cnt=0            #for counting the total number of tries taken (only unique attempts and attempts with valid inputs are counted)
 	strike=0         #counts the total number of correct strikes on ship
 
