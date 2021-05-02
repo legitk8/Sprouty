@@ -1,2 +1,2 @@
-# Rose
+# Sprouty
 ### Discord Bot
