@@ -2,7 +2,7 @@ import discord, os, asyncio, requests, json, random
 from dotenv import load_dotenv
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix=['sprouty ', 'Sprouty '], help_command=None)
+bot = commands.Bot(command_prefix=['sprouty ', 'Sprouty ', 's!'], help_command=None)
 
 dict = {}
 
@@ -57,7 +57,7 @@ async def ping(message):
 	await message.channel.send(f'My ping is {round(bot.latency*1000)}ms')
 
 @bot.command()
-async def check(message):
+async def view(message):
 	author=str(message.author)
 	await message.channel.send(f"Task list of {message.author.mention}:")
 	await message.channel.send(printX(dict[author]))
@@ -92,7 +92,7 @@ async def done(message, task_num: int):
 		for i in range(task_num-1,len(dict[author])):
 			dict[author][i].tasknum-=1
 
-		await message.channel.send(f'Done task {task_num}\n')
+		await message.channel.send(f'Deleted task {task_num}\n')
 
 		try:
 			with open('config.txt', 'w') as f:
@@ -111,13 +111,31 @@ async def doing(message, task_num: int):
 		author=str(message.author)
 		time = dict[author][task_num-1].tasktime
 
-		await asyncio.sleep(time)*60
+		await message.channel.send('Task Started')
+		await asyncio.sleep(time)
 		await message.channel.send(f'Congratz,{message.author.mention} your task is done')
 
 		quote = get_quotes()
 		await message.channel.send(quote)
 
-		await done(message, task_num)
+		if task_num > 0:
+			author=str(message.author)
+			del dict[author][task_num-1]
+			for i in range(task_num-1,len(dict[author])):
+				dict[author][i].tasknum-=1
+
+			await message.channel.send(f'Done task {task_num}\n')
+
+			try:
+				with open('config.txt', 'w') as f:
+					for i in dict:
+						f.write(str(i)+'\n')
+						for j in dict[i]:
+							f.write(f'{j.tasknum}:{j.taskname}:{j.tasktime}\n')
+			except Exception as e:
+				print(e)
+		else:
+			await message.channel.send('Please enter the right task number')
 	else:
 		await message.channel.send('Please enter the right task number')
 
@@ -240,6 +258,7 @@ async def battleship(message,ship_size=3, dimension=5):
 @bot.command()
 async def help(message):
     help_message='''```Command List\n
+        prefix - sprouty/Sprouty/s!\n
         ping - get bot ping\n
         view - view your tasks\n
         todo [work name] [work time] - add task to your list\n
