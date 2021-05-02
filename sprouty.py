@@ -59,8 +59,9 @@ async def ping(message):
 @bot.command()
 async def view(message):
 	author=str(message.author)
-
-	if not dict[author]:
+	if not author in dict:
+		await message.channel.send('Task List Empty!')
+	elif not dict[author]:
 		await message.channel.send('Task List Empty!')
 	else:
 		author=str(message.author)
