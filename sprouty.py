@@ -59,8 +59,13 @@ async def ping(message):
 @bot.command()
 async def view(message):
 	author=str(message.author)
-	await message.channel.send(f"Task list of {message.author.mention}:")
-	await message.channel.send(printX(dict[author]))
+
+	if not dict[author]:
+		await message.channel.send('Task List Empty!')
+	else:
+		author=str(message.author)
+		await message.channel.send(f"Task list of {message.author.mention}:")
+		await message.channel.send(printX(dict[author]))
 
 
 @bot.command()
@@ -86,45 +91,17 @@ async def todo(message, work: str='Generic', work_time: int=10):
 
 @bot.command(aliases=['del', 'rem'])
 async def done(message, task_num: int):
-	if task_num > 0:
-		author=str(message.author)
-		del dict[author][task_num-1]
-		for i in range(task_num-1,len(dict[author])):
-			dict[author][i].tasknum-=1
+	author=str(message.author)
 
-		await message.channel.send(f'Deleted task {task_num}\n')
-
-		try:
-			with open('config.txt', 'w') as f:
-				for i in dict:
-					f.write(str(i)+'\n')
-					for j in dict[i]:
-						f.write(f'{j.tasknum}:{j.taskname}:{j.tasktime}\n')
-		except Exception as e:
-			print(e)
+	if not dict[author]:
+		await message.channel.send('Task List Empty!')
 	else:
-		await message.channel.send('Please enter the right task number')
-
-@bot.command(aliases=['start'])
-async def doing(message, task_num: int):
-	if task_num > 0:
-		author=str(message.author)
-		time = dict[author][task_num-1].tasktime
-
-		await message.channel.send('Task Started')
-		await asyncio.sleep(time)
-		await message.channel.send(f'Congratz,{message.author.mention} your task is done')
-
-		quote = get_quotes()
-		await message.channel.send(quote)
-
 		if task_num > 0:
-			author=str(message.author)
 			del dict[author][task_num-1]
 			for i in range(task_num-1,len(dict[author])):
 				dict[author][i].tasknum-=1
 
-			await message.channel.send(f'Done task {task_num}\n')
+			await message.channel.send(f'Deleted task {task_num}\n')
 
 			try:
 				with open('config.txt', 'w') as f:
@@ -136,8 +113,43 @@ async def doing(message, task_num: int):
 				print(e)
 		else:
 			await message.channel.send('Please enter the right task number')
+
+@bot.command(aliases=['start'])
+async def doing(message, task_num: int):
+	author=str(message.author)
+
+	if not dict[author]:
+		await message.channel.send('All your Tasks are done!')
 	else:
-		await message.channel.send('Please enter the right task number')
+		if task_num > 0:
+			time = dict[author][task_num-1].tasktime*60
+			await message.channel.send('Task Started')
+			await asyncio.sleep(time)
+			await message.channel.send(f'Congratz,{message.author.mention} your task is done')
+
+			quote = get_quotes()
+			await message.channel.send(quote)
+
+			if task_num > 0:
+				author=str(message.author)
+				del dict[author][task_num-1]
+				for i in range(task_num-1,len(dict[author])):
+					dict[author][i].tasknum-=1
+
+				await message.channel.send(f'Done task {task_num}\n')
+
+				try:
+					with open('config.txt', 'w') as f:
+						for i in dict:
+							f.write(str(i)+'\n')
+							for j in dict[i]:
+								f.write(f'{j.tasknum}:{j.taskname}:{j.tasktime}\n')
+				except Exception as e:
+					print(e)
+			else:
+				await message.channel.send('Please enter the right task number')
+		else:
+			await message.channel.send('Please enter the right task number')
 
 #loop which asks the users for input, checks user's input and prints board after updating it
 @bot.command()
