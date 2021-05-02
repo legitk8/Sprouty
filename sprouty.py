@@ -96,6 +96,24 @@ async def done(message, task_num: int):
 	if not dict[author]:
 		await message.channel.send('Task List Empty!')
 	else:
+<<<<<<< HEAD
+=======
+		await message.channel.send('Please enter the right task number')
+
+@bot.command(aliases=['start'])
+async def doing(message, task_num: int):
+	if task_num > 0:
+		author=str(message.author)
+		time = dict[author][task_num-1].tasktime*60
+
+		await message.channel.send('Task Started')
+		await asyncio.sleep(time)
+		await message.channel.send(f'Congratz,{message.author.mention} your task is done')
+
+		quote = get_quotes()
+		await message.channel.send(quote)
+
+>>>>>>> cbea516347d1d0670316782b91c5d7c437854078
 		if task_num > 0:
 			del dict[author][task_num-1]
 			for i in range(task_num-1,len(dict[author])):
