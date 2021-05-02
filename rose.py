@@ -197,13 +197,13 @@ async def battleship(message,ship_size=3, dimension=5):
 		mygame=""
 		await message.channel.send("\n  Guess the coordinates of the hidden ship (eg.rose game A6):  ")
 
-	    def check(m):
-	        return (channel == m.channel) and (author == m.author)
-	    try:
-	        game_input = await bot.wait_for('message', check=check, timeout=20)
-	    except asyncio.TimeoutError:
-	        await channel.send('Timed Out')
-	    else:
+		def check(m):
+			return (channel == m.channel) and (author == m.author)
+		try:
+			game_input = await bot.wait_for('message', check=check, timeout=20)
+		except asyncio.TimeoutError:
+			await channel.send('Timed Out')
+		else:
 			guess=list(game_input.content)
 			if len(guess)==2 and ord('A')-1<ord(guess[0])<ord('A')+DIMENSION and guess[1].isdigit() and 0<=int(guess[1])<DIMENSION:
 				row_coordinate= int(guess[1])+1
@@ -234,6 +234,9 @@ async def battleship(message,ship_size=3, dimension=5):
 				continue_game=1
 				mygame+="\n  Congratulations! You Won!\n""  You took "+str(cnt)+" turns to finish the game."+"\n"
 			await message.channel.send(mygame)
+
+	
+
 
 
 load_dotenv()
