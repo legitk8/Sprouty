@@ -93,8 +93,9 @@ async def todo(message, work: str='Generic', work_time: int=10):
 @bot.command(aliases=['del', 'rem'])
 async def done(message, task_num: int):
 	author=str(message.author)
-
-	if not dict[author]:
+	if not author in dict:
+		await message.channel.send('Task List Empty!')
+	elif not dict[author]:
 		await message.channel.send('Task List Empty!')
 	else:
 		if task_num > 0:
@@ -118,8 +119,9 @@ async def done(message, task_num: int):
 @bot.command(aliases=['start'])
 async def doing(message, task_num: int):
 	author=str(message.author)
-
-	if not dict[author]:
+	if not author in dict:
+		await message.channel.send('Task List Empty!')
+	elif not dict[author]:
 		await message.channel.send('All your Tasks are done!')
 	else:
 		if task_num > 0:
