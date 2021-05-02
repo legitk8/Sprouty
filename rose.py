@@ -125,7 +125,7 @@ async def doing(message, task_num: int):
 @bot.command()
 async def battleship(message,ship_size=3, dimension=5):
 	author=message.author
-	channel = message.channel
+	channel=message.channel
 	mygame=""
 	SHIP_SIZE=ship_size
 	DIMENSION=dimension
@@ -174,6 +174,7 @@ async def battleship(message,ship_size=3, dimension=5):
 				mygame+=str(board[i][j])+" | "
 		mygame+="\n"
 		mygame+="  +"+"---+"*DIMENSION+"\n"
+	await message.channel.send(f'```{mygame}```')
 
 	#computer assigns coordinates for the location of our ship using a random function
 
